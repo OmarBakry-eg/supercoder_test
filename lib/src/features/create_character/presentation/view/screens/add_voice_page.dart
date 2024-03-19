@@ -37,17 +37,21 @@ class _AddVoiceScreenState extends State<AddVoiceScreen> {
             centerTitle: true,
             title: const AppbarTitle(text: "Create Voice")),
         body: SafeArea(
-          child: Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.symmetric(vertical: 16.v),
-              child: Column(children: [
-                SizedBox(height: 16.v),
-                const BuildComponentTen(),
-                const Spacer()
-              ])),
+          child: SingleChildScrollView(
+            child: Container(
+                width: double.maxFinite,
+                padding: EdgeInsets.symmetric(vertical: 16.v),
+                child: Column(children: [
+                  SizedBox(height: 16.v),
+                  const BuildComponentTen(),
+                  //SizedBox(height: 16.v),
+                  //const Spacer()
+                ])),
+          ),
         ),
         bottomNavigationBar: Container(
-            margin: EdgeInsets.only(left: 83.h, right: 12.h, bottom: 57.v),
+            margin: EdgeInsets.only(
+                left: 83.h, right: 12.h, bottom: 57.v, top: 11.v),
             decoration: AppDecoration.fillGray,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -62,6 +66,12 @@ class _AddVoiceScreenState extends State<AddVoiceScreen> {
                   }),
                   CustomElevatedButton(
                       onPressed: () {
+                        if (createCharacterCubit.curentSelectedVoice == null) {
+                          Constants.showSnackBar(
+                              content:
+                                  "You can't move forward without selecting a voice");
+                          return;
+                        }
                         Constants.hideLoadingOrNavBack;
                       },
                       width: 179.h,
@@ -91,29 +101,24 @@ class BuildComponentTen extends StatelessWidget {
                   style: CustomTextStyles.titleMediumWhiteA700_1),
               SizedBox(height: 16.v),
               BlocBuilder<CreateCharacterCubit, CreateCharacterState>(
-                bloc: createCharacterCubit,
-                builder: (context, state) {
-                  return state is VoicesLoading
-                      ? const Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        )
-                      : Expanded(
-                          child: ListView.separated(
-                              shrinkWrap: true,
-                              itemBuilder: (c, i) => Frame(
-                                  data: createCharacterCubit
-                                      .voicesModel?.data?[i],
-                                  iconPlay: ImageConstant
-                                      .imgIconPlay27x27, //ImageConstant.imgPauseCircleFilled,
-                                  checkRound: ImageConstant
-                                      .imgCheckRoundPrimary), // imgCheckRound
-                              separatorBuilder: (c, i) => SizedBox(height: 8.v),
-                              itemCount: createCharacterCubit
-                                      .voicesModel?.data?.length ??
-                                  0),
-                        );
-                },
-              ),
+                  bloc: createCharacterCubit,
+                  builder: (context, state) {
+                    return state is VoicesLoading
+                        ? const Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          )
+                        : Column(
+                            children: createCharacterCubit.voicesModel!.data!
+                                .map(
+                                  (e) => Frame(
+                                      data: e,
+                                      iconPlay: ImageConstant
+                                          .imgIconPlay27x27, //ImageConstant.imgPauseCircleFilled,
+                                      checkRound:
+                                          ImageConstant.imgCheckRoundPrimary),
+                                )
+                                .toList());
+                  }),
             ]));
   }
 }
@@ -164,49 +169,44 @@ class Frame extends StatelessWidget {
                             .copyWith(color: appTheme.whiteA700)),
                     SizedBox(height: 5.v),
                     SizedBox(
-                        width: 157.h,
+                        //   width: 157.h,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                  // width: 51.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 6.h, vertical: 1.v),
-                                  decoration: AppDecoration.fillPrimary
-                                      .copyWith(
-                                          borderRadius:
-                                              BorderRadiusStyle.roundedBorder4),
-                                  child: Text(
-                                      "{${data?.gender?.name ?? "unknown"}}",
-                                      style: theme.textTheme.bodySmall!
-                                          .copyWith(
-                                              color: appTheme.whiteA700))),
-                              Container(
-                                  //  width: 36.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 6.h, vertical: 1.v),
-                                  decoration: AppDecoration.fillPrimary
-                                      .copyWith(
-                                          borderRadius:
-                                              BorderRadiusStyle.roundedBorder4),
-                                  child: Text(
-                                      "{${data?.age?.name ?? "unknown"}}",
-                                      style: theme.textTheme.bodySmall!
-                                          .copyWith(
-                                              color: appTheme.whiteA700))),
-                              Container(
-                                  // width: 62.h,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 6.h, vertical: 1.v),
-                                  decoration: AppDecoration.fillPrimary
-                                      .copyWith(
-                                          borderRadius:
-                                              BorderRadiusStyle.roundedBorder4),
-                                  child: Text(
-                                      "{${data?.style?.name ?? "unknown"}}",
-                                      style: theme.textTheme.bodySmall!
-                                          .copyWith(color: appTheme.whiteA700)))
-                            ]))
+                          Container(
+                              // width: 51.h,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6.h, vertical: 1.v),
+                              decoration: AppDecoration.fillPrimary.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder4),
+                              child: Text(
+                                  "{${data?.gender?.name ?? "unknown"}}",
+                                  style: theme.textTheme.bodySmall!
+                                      .copyWith(color: appTheme.whiteA700))),
+                          SizedBox(width: 5.h),
+                          Container(
+                              //  width: 36.h,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6.h, vertical: 1.v),
+                              decoration: AppDecoration.fillPrimary.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder4),
+                              child: Text("{${data?.age?.name ?? "unknown"}}",
+                                  style: theme.textTheme.bodySmall!
+                                      .copyWith(color: appTheme.whiteA700))),
+                          SizedBox(width: 5.h),
+                          Container(
+                              // width: 62.h,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6.h, vertical: 1.v),
+                              decoration: AppDecoration.fillPrimary.copyWith(
+                                  borderRadius:
+                                      BorderRadiusStyle.roundedBorder4),
+                              child: Text("{${data?.style?.name ?? "unknown"}}",
+                                  style: theme.textTheme.bodySmall!
+                                      .copyWith(color: appTheme.whiteA700)))
+                        ]))
                   ])),
           const Spacer(),
           BlocBuilder<CreateCharacterCubit, CreateCharacterState>(

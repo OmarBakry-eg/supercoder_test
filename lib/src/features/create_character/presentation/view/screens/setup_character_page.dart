@@ -19,85 +19,100 @@ class SetupCharacterProfile extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: SafeArea(
               child: Container(
+                  decoration: const BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 40,
+                      spreadRadius: 15,
+                    )
+                  ]),
                   width: double.maxFinite,
                   padding: EdgeInsets.symmetric(horizontal: 12.h),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            AppbarLeadingImage(
-                                imagePath: ImageConstant.imgArrowLeft,
-                                margin: EdgeInsets.only(
-                                    left: 16.h, top: 16.v, bottom: 118.v),
-                                onTap: () {
-                                  Constants.hideLoadingOrNavBack;
-                                }),
-                            const Spacer(),
-                            AppbarTitle(
-                              text: "Preview",
-                              margin: EdgeInsets.only(top: 18.v, bottom: 119.v),
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                            height: 88.v,
-                            width: 72.h,
-                            decoration: AppDecoration.outlineOnError,
-                            child: Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  CustomImageView(
-                                      imagePath: ImageConstant.imgRectangle257,
-                                      height: 72.adaptSize,
-                                      width: 72.adaptSize,
-                                      radius: BorderRadius.circular(36.h),
-                                      alignment: Alignment.topCenter),
-                                  CustomOutlinedButton(
-                                      width: 56.h,
-                                      text: "Edit",
-                                      buttonStyle:
-                                          CustomButtonStyles.outlinePrimary,
-                                      alignment: Alignment.bottomCenter)
-                                ])),
-                        SizedBox(height: 8.v),
-                        Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8.h, vertical: 12.v),
-                            decoration: AppDecoration.fillOnPrimaryContainer
-                                .copyWith(
-                                    borderRadius:
-                                        BorderRadiusStyle.roundedBorder16),
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                      padding: EdgeInsets.only(left: 4.h),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 1.v, bottom: 2.v),
-                                                child: Text("Hosino Ai",
-                                                    style: theme
-                                                        .textTheme.titleLarge)),
-                                            CustomOutlinedButton(
-                                                width: 56.h, text: "Edit")
-                                          ])),
-                                  SizedBox(height: 8.v),
-                                  const BuildBubbleWidget(),
-                                  SizedBox(height: 8.v),
-                                  const BuildBubbleOne()
-                                ])),
-                        SizedBox(height: 5.v)
-                      ])),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AppbarLeadingImage(
+                                  imagePath: ImageConstant.imgArrowLeft,
+                                  margin: EdgeInsets.only(
+                                      left: 16.h, top: 16.v, bottom: 118.v),
+                                  onTap: () {
+                                    Constants.hideLoadingOrNavBack;
+                                  }),
+                              const Spacer(),
+                              Center(
+                                child: AppbarTitle(
+                                  text: "Preview",
+                                  margin:
+                                      EdgeInsets.only(top: 18.v, bottom: 119.v),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                          // const Spacer(),
+                          Container(
+                              height: 88.v,
+                              width: 72.h,
+                              decoration: AppDecoration.outlineOnError,
+                              child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    CustomImageView(
+                                        imagePath:
+                                            ImageConstant.imgRectangle257,
+                                        height: 72.adaptSize,
+                                        width: 72.adaptSize,
+                                        radius: BorderRadius.circular(36.h),
+                                        alignment: Alignment.topCenter),
+                                    CustomOutlinedButton(
+                                        width: 56.h,
+                                        text: "Edit",
+                                        buttonStyle:
+                                            CustomButtonStyles.outlinePrimary,
+                                        alignment: Alignment.bottomCenter)
+                                  ])),
+                          SizedBox(height: 8.v),
+                          Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.h, vertical: 12.v),
+                              decoration: AppDecoration.fillOnPrimaryContainer
+                                  .copyWith(
+                                      borderRadius:
+                                          BorderRadiusStyle.roundedBorder16),
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.h),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 1.v, bottom: 2.v),
+                                                  child: Text("Hosino Ai",
+                                                      style: theme.textTheme
+                                                          .titleLarge)),
+                                              CustomOutlinedButton(
+                                                  width: 56.h, text: "Edit")
+                                            ])),
+                                    SizedBox(height: 8.v),
+                                    const BuildBubbleWidget(),
+                                    SizedBox(height: 8.v),
+                                    const BuildBubbleOne()
+                                  ])),
+                          SizedBox(height: 5.v)
+                        ]),
+                  )),
             )),
         bottomNavigationBar: Container(
-            margin: EdgeInsets.only(left: 12.h, right: 12.h, bottom: 57.v),
+            margin: EdgeInsets.only(
+                left: 12.h, right: 12.h, bottom: 57.v, top: 15.v),
             //decoration: AppDecoration.gradientOnErrorToOnError,
             child: CustomElevatedButton(
                 height: 52.v,
@@ -166,11 +181,7 @@ class BuildBubbleOne extends StatelessWidget {
                 imagePath: ImageConstant.imgIconPlay,
                 height: 27.adaptSize,
                 width: 27.adaptSize),
-            CustomImageView(
-                imagePath: ImageConstant.imgHttpsLottief,
-                height: 24.v,
-                width: 68.h,
-                margin: EdgeInsets.only(left: 8.h, bottom: 4.v)),
+            Text("Voice Name", style: theme.textTheme.labelLarge),
             const Spacer(),
             CustomOutlinedButton(width: 94.h, text: "Edit Voice")
           ])

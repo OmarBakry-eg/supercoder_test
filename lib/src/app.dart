@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             navigatorObservers: [Constants.routeObserver],
             navigatorKey: Constants.navigatorKey,
-            home: const StartScreen());
+            home: const SetupCharacterProfile());
       }),
     );
   }

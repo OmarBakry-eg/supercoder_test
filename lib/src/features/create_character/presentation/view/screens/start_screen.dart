@@ -1,7 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supercoder_test/src/features/create_character/presentation/cubit/create_character_cubit.dart';
-import 'package:supercoder_test/src/utils/enum.dart';
-import 'package:supercoder_test/src/utils/exports.dart' as ex;
+import 'package:supercoder_test/src/utils/exports.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatefulWidget {
@@ -29,7 +26,7 @@ class _StartScreenState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ex.appTheme.gray90001,
+      backgroundColor: appTheme.gray90001,
       body: SafeArea(
         child: Container(
           width: double.maxFinite,
@@ -40,11 +37,17 @@ class _StartScreenState extends State<StartScreen> {
               SizedBox(height: 12.v),
               const BuildFrame(),
               SizedBox(height: 28.v),
-              ex.CustomElevatedButton(
+              CustomElevatedButton(
                 height: 48.v,
                 text: "Start",
                 onPressed: () {
-                  ex.Constants.navigateTo(const ex.CreateImageScreen(),
+                  if (createCharacterCubit.selectedGender == null) {
+                    Constants.showSnackBar(
+                        content:
+                            "You can't start without selecting a character");
+                    return;
+                  }
+                  Constants.navigateTo(const CreateImageScreen(),
                       fullscreenDialog: true);
                 },
               ),
@@ -65,15 +68,15 @@ class BuildFrame extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         BuildCardImageGeneration(
-            image: ex.ImageConstant.imgRectangle253,
+            image: ImageConstant.imgRectangle253,
             name: CharacterGender.boy.nameUpper),
         const SizedBox(width: 12),
         BuildCardImageGeneration(
-            image: ex.ImageConstant.imgRectangle25369x70,
+            image: ImageConstant.imgRectangle25369x70,
             name: CharacterGender.girl.nameUpper),
         const SizedBox(width: 12),
         BuildCardImageGeneration(
-            image: ex.ImageConstant.imgRectangle2531,
+            image: ImageConstant.imgRectangle2531,
             name: CharacterGender.nonBinary.nameUpper),
       ],
     );
@@ -105,18 +108,20 @@ class BuildCardImageGeneration extends StatelessWidget {
               horizontal: 20.h,
               vertical: 27.v,
             ),
-            decoration: ex.AppDecoration.outlinePrimary.copyWith(
-                borderRadius: ex.BorderRadiusStyle.roundedBorder16,
-                border: createCharacterCubit.selectedGender ==
-                        CharacterGender.getChar(name)
-                    ? null
-                    : Border.all(width: 1.h, color: ex.appTheme.gray900)),
+            decoration: createCharacterCubit.selectedGender !=
+                    CharacterGender.getChar(name)
+                ? AppDecoration.outlineGray.copyWith(
+                    borderRadius: BorderRadiusStyle.roundedBorder16,
+                  )
+                : AppDecoration.outlinePrimary.copyWith(
+                    borderRadius: BorderRadiusStyle.roundedBorder16,
+                  ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 2),
-                ex.CustomImageView(
+                CustomImageView(
                   imagePath: image,
                   height: 69.v,
                   width: 70.h,
@@ -124,10 +129,10 @@ class BuildCardImageGeneration extends StatelessWidget {
                 const SizedBox(height: 10),
                 Text(
                   name,
-                  style: ex.CustomTextStyles.titleMediumGray600.copyWith(
+                  style: CustomTextStyles.titleMediumGray600.copyWith(
                     color: createCharacterCubit.selectedGender ==
                             CharacterGender.getChar(name)
-                        ? ex.theme.colorScheme.primary
+                        ? theme.colorScheme.primary
                         : null,
                   ),
                 ),

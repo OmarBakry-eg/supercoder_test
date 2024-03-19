@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:supercoder_test/src/features/create_character/presentation/view/screens/setup_character_page.dart';
 import 'package:supercoder_test/src/utils/exports.dart';
 
 class CreateCharacterScreen extends StatelessWidget {
@@ -62,7 +61,8 @@ class CreateCharacterScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Container(
-            margin: EdgeInsets.only(left: 83.h, right: 12.h, bottom: 57.v),
+            margin: EdgeInsets.only(
+                left: 83.h, right: 12.h, bottom: 57.v, top: 15.v),
             decoration: AppDecoration.fillGray,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -102,11 +102,13 @@ class ComponentSeventeen extends StatelessWidget {
           SizedBox(
             width: 4.h,
           ),
-          CustomTextFormField(
-              controller: createCharacterCubit.charName,
-              hintText: "Character AI",
-              textInputAction: TextInputAction.done,
-              contentPadding: EdgeInsets.symmetric(horizontal: 12.h))
+          Flexible(
+            child: CustomTextFormField(
+                controller: createCharacterCubit.charName,
+                hintText: "Character AI",
+                textInputAction: TextInputAction.done,
+                contentPadding: EdgeInsets.symmetric(horizontal: 12.h)),
+          )
         ]));
   }
 }
@@ -213,6 +215,11 @@ class ComponentFifteen extends StatelessWidget {
                             ]),
                         SizedBox(height: 14.v),
                         CustomElevatedButton(
+                            onPressed: () {
+                              createCharacterCubit.playOrPauseVoice(
+                                  createCharacterCubit
+                                      .curentSelectedVoice!.referenceVoiceUrl!);
+                            },
                             height: 54.v,
                             text: createCharacterCubit
                                     .curentSelectedVoice?.name ??

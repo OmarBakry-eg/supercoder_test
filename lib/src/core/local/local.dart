@@ -9,4 +9,12 @@ base class LocalSource {
   }
 
   String? get token => sharedPreferences.getString('token');
+
+
+
+  Future<bool> setCharacterID(String value) async {
+    return await sharedPreferences.setString('characterid', value);
+  }
+
+  String? get getStoredCharacterID => sharedPreferences.getString('characterid');
 }

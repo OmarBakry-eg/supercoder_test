@@ -90,7 +90,8 @@ class CustomTextFormField extends StatelessWidget {
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
-          style: textStyle ?? CustomTextStyles.bodyMediumGray600,
+          style: textStyle ??
+              CustomTextStyles.bodyMediumGray600.copyWith(color: Colors.white),
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,

@@ -21,7 +21,7 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
   final TextEditingController charName = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController firstMessage = TextEditingController();
-  final _player = AudioPlayer(); // Create a player
+  final AudioPlayer _player = AudioPlayer(); // Create a player
 
   void initCubit() async {
     try {
@@ -35,7 +35,9 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
 
   void selectVoice(VoiceData? data) {
     emit(CreateCharacterInitial());
-    curentSelectedVoice = data;
+    curentSelectedVoice == data
+        ? curentSelectedVoice = null
+        : curentSelectedVoice = data;
     emit(VoiceSelected());
   }
 
@@ -84,7 +86,9 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
 
   void selectGender(String char) {
     emit(CreateCharacterInitial());
-    selectedGender = CharacterGender.getChar(char);
+    selectedGender == CharacterGender.getChar(char)
+        ? selectedGender = null
+        : selectedGender = CharacterGender.getChar(char);
     emit(SelectGender());
   }
 
@@ -98,7 +102,9 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
 
   void selectGeneratedImage(String img) {
     emit(CreateCharacterInitial());
-    selectedGeneratedImageURL = img;
+    selectedGeneratedImageURL == img
+        ? selectedGeneratedImageURL = null
+        : selectedGeneratedImageURL = img;
     emit(SelectGeneratedImage());
   }
 
