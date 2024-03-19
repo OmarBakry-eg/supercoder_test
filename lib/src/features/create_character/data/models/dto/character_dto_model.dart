@@ -1,3 +1,5 @@
+import 'package:supercoder_test/src/utils/enum.dart';
+
 class CharacterDtoModel {
   final String? name;
   final String? firstMessage;
@@ -103,23 +105,23 @@ class CharacterDtoModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "firstMessage": firstMessage,
-        "scenario": scenario,
-        "exampleDialogues": exampleDialogues,
-        "profileImageUrl": profileImageUrl,
-        "backgroundImageUrl": backgroundImageUrl,
-        "style": style,
-        "introduce": introduce,
-        "isNsfw": isNsfw,
-        "voiceId": voiceId,
-        "description": description,
-        "tags": tags,
-        "visibility": visibility,
-        "gender": gender,
-        "region": region,
-        "ageGroup": ageGroup,
-        "height": height,
-        "occupation": occupation,
+        "name": name ?? "string",
+        "firstMessage": firstMessage ?? "string",
+        "scenario": scenario ?? "string",
+        "exampleDialogues": exampleDialogues ?? "string",
+        "profileImageUrl": profileImageUrl ?? "string",
+        "backgroundImageUrl": backgroundImageUrl ?? "string",
+        "style": style?? "Anime",
+        "introduce": introduce ?? "string",
+        "isNsfw": isNsfw ?? true,
+        "voiceId": voiceId ?? 0,
+        "description": description ?? "string",
+        "tags": tags ?? "string",
+        "visibility": visibility ?? "string",
+        "gender":CharacterGenderGeneral.getChar(gender),
+        "region": region ?? "string",
+        "ageGroup": ageGroup ?? "string",
+        "height": height ?? "string",
+        "occupation": occupation ?? "string",
       };
 }

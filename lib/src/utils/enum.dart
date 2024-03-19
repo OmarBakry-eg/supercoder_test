@@ -15,19 +15,18 @@ enum CharacterGender {
 enum CharacterGenderGeneral {
   male,
   female,
-  nonBinary;
+  other;
 
-  String get nameUpper => this == nonBinary ? "Non-Binary" : name.capitalize!;
+  String get nameUpper => name.capitalize!;
 
   static String getChar(String? name) {
     switch (name?.toLowerCase()) {
       case "boy":
         return CharacterGenderGeneral.male.nameUpper;
       case "girl":
-        return CharacterGenderGeneral.female.nameUpper;  
+        return CharacterGenderGeneral.female.nameUpper;
       default:
-        return CharacterGenderGeneral.nonBinary.nameUpper;
+        return CharacterGenderGeneral.other.nameUpper;
     }
   }
-
 }

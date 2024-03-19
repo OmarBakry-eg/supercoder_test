@@ -78,14 +78,15 @@ class CreateCharacterScreen extends StatelessWidget {
                       child: Text("Back",
                           style: CustomTextStyles.titleMediumPrimary)),
                   CustomElevatedButton(
-                      width: 179.h,
-                      onPressed: () {
-                        createCharacterCubit.creatCharacterLogic();
-                      },
-                      text: "Next",
-                      margin: EdgeInsets.only(left: 79.h),
-                      buttonStyle: CustomButtonStyles.outlineOnError,
-                      buttonTextStyle: CustomTextStyles.titleMediumGray600)
+                    width: 179.h,
+                    onPressed: () {
+                      createCharacterCubit.creatCharacterLogic();
+                    },
+                    text: "Next",
+                    margin: EdgeInsets.only(left: 79.h),
+                    // buttonStyle: CustomButtonStyles.outlinePrimary,
+                    // buttonTextStyle: CustomTextStyles.titleMediumGray600
+                  )
                 ])));
   }
 }
@@ -118,7 +119,8 @@ class ComponentSeventeen extends StatelessWidget {
                 controller: createCharacterCubit.charName,
                 hintText: "Character AI",
                 textInputAction: TextInputAction.done,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12.h)),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12.h, vertical: 7.v)),
           )
         ]));
   }

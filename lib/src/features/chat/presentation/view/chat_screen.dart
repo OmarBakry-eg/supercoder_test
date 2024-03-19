@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     const Spacer(),
                     Center(
                       child: AppbarTitle(
-                        text: "Chat with character name",
+                        text: "${createCharacterCubit.currentCharacter?.name}",
                         margin: EdgeInsets.only(top: 18.v, bottom: 119.v),
                       ),
                     ),
@@ -102,23 +102,15 @@ class _ChatScreenState extends State<ChatScreen> {
                                         introMessage:
                                             chatCubit.messageList?[i].text ??
                                                 "")
-                                    : chatCubit.messageList!.length >= 2 &&
-                                            (chatCubit.messageList?[1].id ==
-                                                chatCubit.messageList?[i].id)
-                                        ? FirstMessageAndAIMessageWidget(
+                                    : chatCubit.messageList?[i].speaker ==
+                                            "user"
+                                        ? MyMessageWidget(
+                                            message: chatCubit
+                                                    .messageList?[i].text ??
+                                                "")
+                                        : FirstMessageAndAIMessageWidget(
                                             message:
-                                                chatCubit.messageList?[i].text,
-                                            isFirstMessage: true,
-                                          )
-                                        : chatCubit.messageList?[i].speaker ==
-                                                "user"
-                                            ? MyMessageWidget(
-                                                message: chatCubit
-                                                        .messageList?[i].text ??
-                                                    "")
-                                            : FirstMessageAndAIMessageWidget(
-                                                message: chatCubit
-                                                    .messageList?[i].text),
+                                                chatCubit.messageList?[i].text),
                                 separatorBuilder: (c, i) => SizedBox(
                                       height: 8.v,
                                     ),
@@ -141,7 +133,6 @@ class _ChatScreenState extends State<ChatScreen> {
         height: 150.v,
         padding: EdgeInsets.symmetric(horizontal: 12.h),
         margin: EdgeInsets.only(top: 15.v),
-        //decoration: AppDecoration.gradientOnErrorToOnError,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +140,7 @@ class _ChatScreenState extends State<ChatScreen> {
             SizedBox(
               height: 10.v,
             ),
-            Text("Character Name",
+            Text("${createCharacterCubit.currentCharacter?.name}",
                 style:
                     theme.textTheme.titleLarge?.copyWith(color: Colors.white)),
             SizedBox(
@@ -248,10 +239,9 @@ class IntroMessageWidget extends StatelessWidget {
 }
 
 class FirstMessageAndAIMessageWidget extends StatelessWidget {
-  final bool isFirstMessage;
   final String? message;
   const FirstMessageAndAIMessageWidget(
-      {super.key, this.isFirstMessage = false, required this.message});
+      {super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -262,28 +252,10 @@ class FirstMessageAndAIMessageWidget extends StatelessWidget {
           borderRadius: BorderRadiusStyle.roundedBorder16,
           color: const Color(0xFF877A4E)),
       margin: EdgeInsets.only(left: 5.h),
-      child: isFirstMessage
-          ? RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text:
-                        "Taking a deep breath, Yuzu gently knocks on the door and whispers.\n",
-                    style: CustomTextStyles.bodyLargeNotoSansffbabbc0,
-                  ),
-                  TextSpan(
-                    text: message ??
-                        "Good morning, master. It's time to wake up. nyang",
-                    style: CustomTextStyles.titleMediumNotoSansffffffff,
-                  ),
-                ],
-              ),
-              textAlign: TextAlign.left,
-            )
-          : Text(
-              message ?? "Nothing",
-              style: CustomTextStyles.titleMediumNotoSansffffffff,
-            ),
+      child: Text(
+        message ?? "Nothing",
+        style: CustomTextStyles.titleMediumNotoSansffffffff,
+      ),
     ).addingAlign(context, alignmentGeometry: Alignment.bottomLeft);
   }
 }

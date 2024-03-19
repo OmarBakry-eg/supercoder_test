@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             navigatorObservers: [Constants.routeObserver],
             navigatorKey: Constants.navigatorKey,
-            home: const ChatScreen());
+            home: const StartScreen());
       }),
     );
   }

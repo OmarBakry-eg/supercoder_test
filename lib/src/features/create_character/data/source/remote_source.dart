@@ -42,7 +42,7 @@ final class CreateCharacterRemoteSource {
         isLoading: false,
         isHeaderJsonType: false);
     if (result is SuccessState) {
-      return result.value;
+      return result.value.toString();
     } else if (result is ErrorState) {
       throw ServerException(message: result.msg.toString());
     } else if (result is NetworkErrorState) {

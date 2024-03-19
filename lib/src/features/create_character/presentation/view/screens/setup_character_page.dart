@@ -67,19 +67,18 @@ class SetupCharacterProfile extends StatelessWidget {
                                   children: [
                                     CustomImageView(
                                         imagePath: createCharacterCubit
-                                                .currentCharacter
-                                                ?.profileImageUrl ??
-                                            ImageConstant.imgRectangle257,
+                                                    .currentCharacter
+                                                    ?.profileImageUrl ==
+                                                'string'
+                                            ? ImageConstant.imgRectangle257
+                                            : createCharacterCubit
+                                                    .currentCharacter
+                                                    ?.profileImageUrl ??
+                                                ImageConstant.imgRectangle257,
                                         height: 72.adaptSize,
                                         width: 72.adaptSize,
                                         radius: BorderRadius.circular(36.h),
                                         alignment: Alignment.topCenter),
-                                    // CustomOutlinedButton(
-                                    //     width: 56.h,
-                                    //     text: "Edit",
-                                    //     buttonStyle:
-                                    //         CustomButtonStyles.outlinePrimary,
-                                    //     alignment: Alignment.bottomCenter)
                                   ])),
                           SizedBox(height: 8.v),
                           Container(

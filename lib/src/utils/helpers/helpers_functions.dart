@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supercoder_test/src/utils/exports.dart';
 
-
 class HelpersMethods {
   static GenerateCharacterProfileImageModel generateCharacterProfileImageModel(
       CreateCharacterCubit characterCubit) {
@@ -10,18 +9,18 @@ class HelpersMethods {
         gender: characterCubit.selectedGender?.nameUpper,
         imageUrl: characterCubit.selectedImageURL);
   }
-    static CharacterDtoModel generateCharacterDTO(
+
+  static CharacterDtoModel generateCharacterDTO(
       CreateCharacterCubit characterCubit) {
     return CharacterDtoModel(
-      profileImageUrl: characterCubit.selectedImageURL,
-      backgroundImageUrl: characterCubit.selectedImageURL,
+        profileImageUrl: characterCubit.selectedGeneratedImageURL,
+        backgroundImageUrl:characterCubit.selectedGeneratedImageURL,
         name: characterCubit.charName.text,
         gender: characterCubit.selectedGender?.nameUpper,
         firstMessage: characterCubit.firstMessage.text,
         description: characterCubit.descriptionController.text,
         introduce: characterCubit.intro.text,
-        voiceId: characterCubit.curentSelectedVoice?.id
-        );
+        voiceId: characterCubit.curentSelectedVoice?.id);
   }
 
   static void showDateTimePickerWithTextControllerParm(
