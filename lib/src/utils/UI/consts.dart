@@ -39,16 +39,12 @@ mixin Constants {
     return FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  static Future<void> showLoading({
-    String? title,
-    String? description,
-    Function? onPressed,
-  }) async {
+  static Future<void> showLoading() async {
     return showDialog<void>(
       context: navigatorKey.currentContext!,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return const Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator.adaptive());
       },
     );
   }

@@ -20,9 +20,11 @@ class CharacterModel {
   final String? region;
   final String? ageGroup;
   final String? height;
+  final String? description;
 
   const CharacterModel({
     this.id,
+    this.description,
     this.createdAt,
     this.updatedAt,
     this.name,
@@ -45,30 +47,31 @@ class CharacterModel {
     this.height,
   });
 
-  CharacterModel copyWith({
-    int? id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? name,
-    String? firstMessage,
-    String? persona,
-    String? scenario,
-    String? exampleDialogues,
-    String? profileImageUrl,
-    String? backgroundImageUrl,
-    String? style,
-    String? introduce,
-    String? shortIntroduce,
-    int? age,
-    bool? isNsfw,
-    int? voiceId,
-    String? speechUrl,
-    String? creatorId,
-    String? region,
-    String? ageGroup,
-    String? height,
-  }) =>
+  CharacterModel copyWith(
+          {int? id,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          String? name,
+          String? firstMessage,
+          String? persona,
+          String? scenario,
+          String? exampleDialogues,
+          String? profileImageUrl,
+          String? backgroundImageUrl,
+          String? style,
+          String? introduce,
+          String? shortIntroduce,
+          int? age,
+          bool? isNsfw,
+          int? voiceId,
+          String? speechUrl,
+          String? creatorId,
+          String? region,
+          String? ageGroup,
+          String? height,
+          String? description}) =>
       CharacterModel(
+        description: description ?? this.description,
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -118,6 +121,7 @@ class CharacterModel {
         region: json["region"],
         ageGroup: json["ageGroup"],
         height: json["height"],
+        description: json["description"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -142,5 +146,6 @@ class CharacterModel {
         "region": region,
         "ageGroup": ageGroup,
         "height": height,
+        "description": description
       };
 }

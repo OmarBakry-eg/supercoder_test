@@ -111,7 +111,8 @@ final class CreateCharacterRemoteSource {
       'api/characters',
       characterDtoModel.toJson(),
       token: _localSource.token,
-      isLoading: false,
+      isLoading: true,
+      
     );
     if (result is SuccessState) {
       CharacterModel characterModel = CharacterModel.fromJson(result.value);

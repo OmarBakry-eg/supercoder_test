@@ -6,6 +6,8 @@ class SetupCharacterProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CreateCharacterCubit createCharacterCubit =
+        BlocProvider.of<CreateCharacterCubit>(context);
     return Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -15,7 +17,10 @@ class SetupCharacterProfile extends StatelessWidget {
             decoration: BoxDecoration(
                 color: appTheme.gray900,
                 image: DecorationImage(
-                    image: AssetImage(ImageConstant.imgGroup80),
+                    image: (createCharacterCubit.currentCharacter == null
+                        ? AssetImage(ImageConstant.imgGroup80)
+                        : NetworkImage(createCharacterCubit.currentCharacter!
+                            .backgroundImageUrl!)) as ImageProvider,
                     fit: BoxFit.cover)),
             child: SafeArea(
               child: Container(
@@ -53,7 +58,6 @@ class SetupCharacterProfile extends StatelessWidget {
                               const Spacer(),
                             ],
                           ),
-                          // const Spacer(),
                           Container(
                               height: 88.v,
                               width: 72.h,
@@ -62,18 +66,20 @@ class SetupCharacterProfile extends StatelessWidget {
                                   alignment: Alignment.bottomCenter,
                                   children: [
                                     CustomImageView(
-                                        imagePath:
+                                        imagePath: createCharacterCubit
+                                                .currentCharacter
+                                                ?.profileImageUrl ??
                                             ImageConstant.imgRectangle257,
                                         height: 72.adaptSize,
                                         width: 72.adaptSize,
                                         radius: BorderRadius.circular(36.h),
                                         alignment: Alignment.topCenter),
-                                    CustomOutlinedButton(
-                                        width: 56.h,
-                                        text: "Edit",
-                                        buttonStyle:
-                                            CustomButtonStyles.outlinePrimary,
-                                        alignment: Alignment.bottomCenter)
+                                    // CustomOutlinedButton(
+                                    //     width: 56.h,
+                                    //     text: "Edit",
+                                    //     buttonStyle:
+                                    //         CustomButtonStyles.outlinePrimary,
+                                    //     alignment: Alignment.bottomCenter)
                                   ])),
                           SizedBox(height: 8.v),
                           Container(
@@ -95,11 +101,15 @@ class SetupCharacterProfile extends StatelessWidget {
                                               Padding(
                                                   padding: EdgeInsets.only(
                                                       top: 1.v, bottom: 2.v),
-                                                  child: Text("Hosino Ai",
+                                                  child: Text(
+                                                      createCharacterCubit
+                                                              .currentCharacter
+                                                              ?.name ??
+                                                          "Hosino Ai",
                                                       style: theme.textTheme
                                                           .titleLarge)),
-                                              CustomOutlinedButton(
-                                                  width: 56.h, text: "Edit")
+                                              // CustomOutlinedButton(
+                                              //     width: 56.h, text: "Edit")
                                             ])),
                                     SizedBox(height: 8.v),
                                     const BuildBubbleWidget(),
@@ -132,60 +142,77 @@ class BuildBubbleOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CreateCharacterCubit createCharacterCubit =
+        BlocProvider.of<CreateCharacterCubit>(context);
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 4.h),
         padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 11.v),
         decoration: AppDecoration.fillGrayF
             .copyWith(borderRadius: BorderRadiusStyle.roundedBorder16),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(
-              height: 73.v,
-              width: 310.h,
-              child: Stack(alignment: Alignment.topLeft, children: [
-                Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                        height: 73.v,
-                        width: 310.h,
-                        decoration: AppDecoration.outlineWhiteA,
-                        child: CustomImageView(
-                            imagePath: ImageConstant.imgIconMenuUp,
-                            height: 24.adaptSize,
-                            width: 24.adaptSize,
-                            alignment: Alignment.topRight))),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                        padding: EdgeInsets.only(right: 27.h),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Prologue",
-                                  style: theme.textTheme.labelLarge),
-                              SizedBox(height: 7.v),
-                              SizedBox(
-                                  width: 282.h,
-                                  child: Text(
-                                      "(Looking out the window, sighing) Why do peope fear me so much? I just want to live...",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: CustomTextStyles
-                                          .bodyMediumBluegray100
-                                          .copyWith(height: 1.50)))
-                            ])))
-              ])),
-          SizedBox(height: 12.v),
+          // SizedBox(
+          //     height: 73.v,
+          //     width: 310.h,
+          //     child: Stack(alignment: Alignment.topLeft, children: [
+          //       Align(
+          //           alignment: Alignment.center,
+          //           child: Container(
+          //               height: 73.v,
+          //               width: 310.h,
+          //               decoration: AppDecoration.outlineWhiteA,
+          //               child: CustomImageView(
+          //                   imagePath: ImageConstant.imgIconMenuUp,
+          //                   height: 24.adaptSize,
+          //                   width: 24.adaptSize,
+          //                   alignment: Alignment.topRight))),
+          //       Align(
+          //           alignment: Alignment.topLeft,
+          //           child: Padding(
+          //               padding: EdgeInsets.only(right: 27.h),
+          //               child: Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Text("Prologue",
+          //                         style: theme.textTheme.labelLarge),
+          //                     SizedBox(height: 7.v),
+          //                     SizedBox(
+          //                         width: 282.h,
+          //                         child: Text(
+          //                             "(Looking out the window, sighing) Why do peope fear me so much? I just want to live...",
+          //                             maxLines: 2,
+          //                             overflow: TextOverflow.ellipsis,
+          //                             style: CustomTextStyles
+          //                                 .bodyMediumBluegray100
+          //                                 .copyWith(height: 1.50)))
+          //                   ])))
+          //     ])),
+          // SizedBox(height: 12.v),
+
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             CustomImageView(
                 imagePath: ImageConstant.imgIconPlay,
                 height: 27.adaptSize,
                 width: 27.adaptSize),
-            Text("Voice Name", style: theme.textTheme.labelLarge),
-            const Spacer(),
-            CustomOutlinedButton(width: 94.h, text: "Edit Voice")
+            SizedBox(width: 5.h),
+            Text(
+                createCharacterCubit.curentSelectedVoice != null &&
+                        createCharacterCubit.curentSelectedVoice?.id ==
+                            createCharacterCubit.currentCharacter?.voiceId
+                    ? "${createCharacterCubit.curentSelectedVoice?.name}"
+                    : "Voice Name",
+                style: theme.textTheme.labelLarge),
+            //   const Spacer(),
+            //CustomOutlinedButton(width: 94.h, text: "Edit Voice")
           ])
-        ]));
+        ])).makeWidgetGestureClickable(context, useInkWell: true, onTap: () {
+      if (createCharacterCubit.curentSelectedVoice?.referenceVoiceUrl == null) {
+        Constants.showSnackBar(content: "Voice not recognized");
+        return;
+      }
+      createCharacterCubit.playOrPauseVoice(
+          createCharacterCubit.curentSelectedVoice!.referenceVoiceUrl!);
+    });
   }
 }
 
@@ -196,6 +223,8 @@ class BuildBubbleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CreateCharacterCubit createCharacterCubit =
+        BlocProvider.of<CreateCharacterCubit>(context);
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 4.h),
         padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 11.v),
@@ -215,7 +244,9 @@ class BuildBubbleWidget extends StatelessWidget {
                     SizedBox(
                         width: 272.h,
                         child: Text(
-                            "Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...",
+                            createCharacterCubit
+                                    .currentCharacter?.description ??
+                                "Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...Describe your character's personality and physical features in a few sentences.Describe your...",
                             maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                             style: CustomTextStyles.bodyMediumBluegray100

@@ -10,6 +10,19 @@ class HelpersMethods {
         gender: characterCubit.selectedGender?.nameUpper,
         imageUrl: characterCubit.selectedImageURL);
   }
+    static CharacterDtoModel generateCharacterDTO(
+      CreateCharacterCubit characterCubit) {
+    return CharacterDtoModel(
+      profileImageUrl: characterCubit.selectedImageURL,
+      backgroundImageUrl: characterCubit.selectedImageURL,
+        name: characterCubit.charName.text,
+        gender: characterCubit.selectedGender?.nameUpper,
+        firstMessage: characterCubit.firstMessage.text,
+        description: characterCubit.descriptionController.text,
+        introduce: characterCubit.intro.text,
+        voiceId: characterCubit.curentSelectedVoice?.id
+        );
+  }
 
   static void showDateTimePickerWithTextControllerParm(
       TextEditingController textEditingController,

@@ -19,45 +19,50 @@ class CreateCharacterScreen extends StatelessWidget {
                 }),
             centerTitle: true,
             title: const AppbarTitle(text: "Create Character")),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-                width: double.maxFinite,
-                padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 16.v),
-                child: Column(children: [
-                  Row(children: [
-                    CustomImageView(
-                        imagePath:
-                            createCharacterCubit.selectedGeneratedImageURL,
-                        height: 60.adaptSize,
-                        width: 60.adaptSize,
-                        radius: BorderRadius.circular(30.h)),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            left: 12.h, top: 21.v, bottom: 18.v),
-                        child: Text("Set up character’s profile",
-                            style: CustomTextStyles.titleMediumWhiteA700_1))
-                  ]),
-                  SizedBox(height: 12.v),
-                  const ComponentSeventeen(),
-                  SizedBox(height: 12.v),
-                  ComponentTwentyTwo(
-                      textEditingController: createCharacterCubit.intro,
-                      label: "Intro *",
-                      description:
-                          "Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences."),
-                  SizedBox(height: 12.v),
-                  const ComponentTwentyFour(),
-                  SizedBox(height: 12.v),
-                  ComponentTwentyTwo(
-                      textEditingController: createCharacterCubit.firstMessage,
-                      label: "First Message *",
-                      description:
-                          "Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences."),
-                  SizedBox(height: 12.v),
-                  const ComponentFifteen(),
-                  SizedBox(height: 5.v)
-                ])),
+        body: Form(
+          key: createCharacterCubit.createCharacterScreenFormKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                  width: double.maxFinite,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.h, vertical: 16.v),
+                  child: Column(children: [
+                    Row(children: [
+                      CustomImageView(
+                          imagePath:
+                              createCharacterCubit.selectedGeneratedImageURL,
+                          height: 60.adaptSize,
+                          width: 60.adaptSize,
+                          radius: BorderRadius.circular(30.h)),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: 12.h, top: 21.v, bottom: 18.v),
+                          child: Text("Set up character’s profile",
+                              style: CustomTextStyles.titleMediumWhiteA700_1))
+                    ]),
+                    SizedBox(height: 12.v),
+                    const ComponentSeventeen(),
+                    SizedBox(height: 12.v),
+                    ComponentTwentyTwo(
+                        textEditingController: createCharacterCubit.intro,
+                        label: "Intro *",
+                        description:
+                            "Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences."),
+                    SizedBox(height: 12.v),
+                    const ComponentTwentyFour(),
+                    SizedBox(height: 12.v),
+                    ComponentTwentyTwo(
+                        textEditingController:
+                            createCharacterCubit.firstMessage,
+                        label: "First Message *",
+                        description:
+                            "Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences."),
+                    SizedBox(height: 12.v),
+                    const ComponentFifteen(),
+                    SizedBox(height: 5.v)
+                  ])),
+            ),
           ),
         ),
         bottomNavigationBar: Container(
@@ -75,7 +80,7 @@ class CreateCharacterScreen extends StatelessWidget {
                   CustomElevatedButton(
                       width: 179.h,
                       onPressed: () {
-                        Constants.navigateTo(const SetupCharacterProfile());
+                        createCharacterCubit.creatCharacterLogic();
                       },
                       text: "Next",
                       margin: EdgeInsets.only(left: 79.h),
@@ -104,6 +109,12 @@ class ComponentSeventeen extends StatelessWidget {
           ),
           Flexible(
             child: CustomTextFormField(
+                validator: (String? v) {
+                  if (v == null) {
+                    return "This field is required";
+                  }
+                  return null;
+                },
                 controller: createCharacterCubit.charName,
                 hintText: "Character AI",
                 textInputAction: TextInputAction.done,
@@ -132,6 +143,12 @@ class ComponentTwentyFour extends StatelessWidget {
               Text("Description *", style: theme.textTheme.labelLarge),
               SizedBox(height: 9.v),
               CustomTextFormField(
+                  validator: (String? v) {
+                    if (v == null) {
+                      return "This field is required";
+                    }
+                    return null;
+                  },
                   controller: createCharacterCubit.descriptionController,
                   hintText:
                       "Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.Describe your character's personality and physical features in a few sentences.",
@@ -176,6 +193,12 @@ class ComponentTwentyTwo extends StatelessWidget {
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     SizedBox(height: 14.v),
                     CustomTextFormField(
+                        validator: (String? v) {
+                          if (v == null) {
+                            return "This field is required";
+                          }
+                          return null;
+                        },
                         controller: textEditingController,
                         hintText: description,
                         textInputAction: TextInputAction.done,

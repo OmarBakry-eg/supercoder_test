@@ -15,13 +15,16 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
   VoicesModel? voicesModel;
   VoiceData? curentSelectedVoice;
   String? currentPlayedURL;
+  CharacterModel? currentCharacter;
 
   final TextEditingController imagePrompt = TextEditingController();
   final TextEditingController intro = TextEditingController();
   final TextEditingController charName = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController firstMessage = TextEditingController();
-  final AudioPlayer _player = AudioPlayer(); // Create a player
+  final GlobalKey<FormState> createCharacterScreenFormKey =
+      GlobalKey<FormState>();
+  final AudioPlayer _player = AudioPlayer();
 
   void initCubit() async {
     try {
@@ -30,6 +33,20 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
     } on OfflineException catch (e) {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+    }
+  }
+
+  void creatCharacterLogic() async {
+    try {
+      currentCharacter = await source
+          .postNewCharacter(HelpersMethods.generateCharacterDTO(this));
+      Constants.navigateTo(const SetupCharacterProfile());
+    } on ServerException catch (e) {
+      Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+    } on OfflineException catch (e) {
+      Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+    } on EmptyCacheException catch (e) {
+      Constants.showSnackBar(content: e.message);
     }
   }
 
