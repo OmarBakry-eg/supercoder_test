@@ -47,3 +47,11 @@ final class PauesVoice extends CreateCharacterState {
 
 final class VoiceSelected extends CreateCharacterState {}
 
+final class CreateCharacterError extends CreateCharacterState {
+  final String message;
+
+  const CreateCharacterError({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}

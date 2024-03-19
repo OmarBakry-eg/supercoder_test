@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<CreateCharacterCubit>.value(
           value: di.sl(),
         ),
+          BlocProvider<ChatCubit>.value(
+          value: di.sl(),
+        ),
       ],
       child: Sizer(builder: (context, orientation, deviceType) {
         return MaterialApp(
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             navigatorObservers: [Constants.routeObserver],
             navigatorKey: Constants.navigatorKey,
-            home: const SetupCharacterProfile());
+            home: const ChatScreen());
       }),
     );
   }

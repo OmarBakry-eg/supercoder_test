@@ -82,6 +82,7 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
   }
 
   void getVoiceList() async {
+    String errorMessage = '';
     if (voicesModel != null) {
       return;
     }
@@ -93,12 +94,15 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
       return;
     } on ServerException catch (e) {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+      errorMessage = e.message;
     } on OfflineException catch (e) {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+      errorMessage = e.message;
     } on EmptyCacheException catch (e) {
       Constants.showSnackBar(content: e.message);
+      errorMessage = e.message;
     }
-    emit(CreateCharacterInitial());
+    emit(CreateCharacterError(message: errorMessage));
   }
 
   void selectGender(String char) {
@@ -126,6 +130,7 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
   }
 
   Future<void> getGeneratedImage() async {
+    String errorMessage = '';
     try {
       emit(GeneratedImagesUploading());
       List<String>? images = await source.createCharacterProfile(
@@ -135,12 +140,15 @@ class CreateCharacterCubit extends Cubit<CreateCharacterState> {
       return;
     } on ServerException catch (e) {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+      errorMessage = e.message;
     } on OfflineException catch (e) {
       Constants.showSnackBar(content: "${e.message}, ${e.statusCode}");
+      errorMessage = e.message;
     } on EmptyCacheException catch (e) {
       Constants.showSnackBar(content: e.message);
+      errorMessage = e.message;
     }
-    emit(CreateCharacterInitial());
+    emit(CreateCharacterError(message: errorMessage));
   }
 
   Future<void> _uploadImageToTheServer(List<File>? files) async {

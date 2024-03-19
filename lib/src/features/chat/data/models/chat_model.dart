@@ -3,7 +3,7 @@ class ChatModel {
   final String? cursor;
   final bool? hasNextPage;
 
-  const ChatModel({
+  ChatModel({
     this.data,
     this.cursor,
     this.hasNextPage,
@@ -23,8 +23,7 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
         data: json["data"] == null
             ? []
-            : List<ChatData>.from(
-                json["data"]!.map((x) => ChatData.fromJson(x))),
+            : List<ChatData>.from(json["data"]!.map((x) => ChatData.fromJson(x))),
         cursor: json["cursor"],
         hasNextPage: json["hasNextPage"],
       );
@@ -39,52 +38,48 @@ class ChatModel {
 }
 
 class ChatData {
-  final String? contentType;
-  final List<String>? alternateResponses;
   final String? id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? speaker;
   final String? text;
-  final String? speechUrl;
+  final String? contentType;
+  final dynamic speechUrl;
+  final List<ChatData>? alternateResponses;
 
-  const ChatData({
-    this.contentType,
-    this.alternateResponses,
+  ChatData({
     this.id,
     this.createdAt,
     this.updatedAt,
     this.speaker,
     this.text,
+    this.contentType,
     this.speechUrl,
+    this.alternateResponses,
   });
 
   ChatData copyWith({
-    String? contentType,
-    List<String>? alternateResponses,
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
     String? speaker,
     String? text,
-    String? speechUrl,
+    String? contentType,
+    dynamic speechUrl,
+    List<ChatData>? alternateResponses,
   }) =>
       ChatData(
-        contentType: contentType ?? this.contentType,
-        alternateResponses: alternateResponses ?? this.alternateResponses,
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         speaker: speaker ?? this.speaker,
         text: text ?? this.text,
+        contentType: contentType ?? this.contentType,
         speechUrl: speechUrl ?? this.speechUrl,
+        alternateResponses: alternateResponses ?? this.alternateResponses,
       );
 
   factory ChatData.fromJson(Map<String, dynamic> json) => ChatData(
-        contentType: json["contentType"],
-        alternateResponses: json["alternateResponses"] == null
-            ? []
-            : List<String>.from(json["alternateResponses"]!.map((x) => x)),
         id: json["id"],
         createdAt: json["createdAt"] == null
             ? null
@@ -94,19 +89,24 @@ class ChatData {
             : DateTime.parse(json["updatedAt"]),
         speaker: json["speaker"],
         text: json["text"],
+        contentType: json["contentType"],
         speechUrl: json["speechUrl"],
+        alternateResponses: json["alternateResponses"] == null
+            ? []
+            : List<ChatData>.from(
+                json["alternateResponses"]!.map((x) => ChatData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "contentType": contentType,
-        "alternateResponses": alternateResponses == null
-            ? []
-            : List<dynamic>.from(alternateResponses!.map((x) => x)),
         "id": id,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "speaker": speaker,
         "text": text,
+        "contentType": contentType,
         "speechUrl": speechUrl,
+        "alternateResponses": alternateResponses == null
+            ? []
+            : List<dynamic>.from(alternateResponses!.map((x) => x.toJson())),
       };
 }

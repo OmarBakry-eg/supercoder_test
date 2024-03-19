@@ -60,3 +60,6 @@ export 'package:supercoder_test/src/features/create_character/presentation/view/
 export 'package:supercoder_test/src/features/create_character/presentation/view/screens/setup_character_page.dart';
 export 'package:supercoder_test/src/features/create_character/data/models/character_model.dart';
 export 'package:supercoder_test/src/features/create_character/data/models/dto/character_dto_model.dart';
+export 'package:supercoder_test/src/features/chat/presentation/cubit/chat_cubit.dart';
+export 'package:supercoder_test/src/features/chat/data/source/remote_source.dart';
+export 'package:supercoder_test/src/features/chat/data/models/chat_model.dart';

@@ -4,10 +4,14 @@ final sl = GetIt.instance;
 Future<void> init() async {
 //* BLOC
   sl.registerFactory<CreateCharacterCubit>(() => CreateCharacterCubit(sl()));
+  sl.registerFactory<ChatCubit>(() => ChatCubit(sl()));
 
 //* REMOTE
   sl.registerLazySingleton<CreateCharacterRemoteSource>(
       () => CreateCharacterRemoteSource(sl(), sl()));
+
+  sl.registerLazySingleton<ChatRemoteSource>(
+      () => ChatRemoteSource(sl(), sl()));
 
 //* CORE
   sl.registerLazySingleton(() => LocalSource(sl()));

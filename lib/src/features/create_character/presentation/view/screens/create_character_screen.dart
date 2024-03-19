@@ -110,7 +110,7 @@ class ComponentSeventeen extends StatelessWidget {
           Flexible(
             child: CustomTextFormField(
                 validator: (String? v) {
-                  if (v == null) {
+                  if (v == null || v.isEmpty) {
                     return "This field is required";
                   }
                   return null;
@@ -144,7 +144,7 @@ class ComponentTwentyFour extends StatelessWidget {
               SizedBox(height: 9.v),
               CustomTextFormField(
                   validator: (String? v) {
-                    if (v == null) {
+                    if (v == null || v.isEmpty) {
                       return "This field is required";
                     }
                     return null;
@@ -194,7 +194,7 @@ class ComponentTwentyTwo extends StatelessWidget {
                     SizedBox(height: 14.v),
                     CustomTextFormField(
                         validator: (String? v) {
-                          if (v == null) {
+                          if (v == null || v.isEmpty) {
                             return "This field is required";
                           }
                           return null;

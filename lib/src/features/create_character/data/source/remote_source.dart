@@ -112,7 +112,6 @@ final class CreateCharacterRemoteSource {
       characterDtoModel.toJson(),
       token: _localSource.token,
       isLoading: true,
-      
     );
     if (result is SuccessState) {
       CharacterModel characterModel = CharacterModel.fromJson(result.value);
@@ -131,12 +130,18 @@ final class CreateCharacterRemoteSource {
     }
   }
 
-  Future<CharacterModel> getCharacterByID(String id) async {
+  Future<CharacterModel?> getCharacterByID({bool throwOnError = false}) async {
     if (_localSource.token == null) {
       throw const EmptyCacheException(message: 'Missing token');
     }
+    if (_localSource.getStoredCharacterID == null) {
+      if (throwOnError) {
+        throw const EmptyCacheException(message: 'Missing CharacterID');
+      }
+      return null;
+    }
     Result result = await _dioClient.get(
-      'api/characters/$id',
+      'api/characters/${_localSource.getStoredCharacterID}',
       _localSource.token,
       isLoading: false,
     );

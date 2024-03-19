@@ -107,17 +107,25 @@ class BuildComponentTen extends StatelessWidget {
                         ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
-                        : Column(
-                            children: createCharacterCubit.voicesModel!.data!
-                                .map(
-                                  (e) => Frame(
-                                      data: e,
-                                      iconPlay: ImageConstant
-                                          .imgIconPlay27x27, //ImageConstant.imgPauseCircleFilled,
-                                      checkRound:
-                                          ImageConstant.imgCheckRoundPrimary),
-                                )
-                                .toList());
+                        : state is CreateCharacterError
+                            ? Center(
+                                child: Text(
+                                  state.message,
+                                  style: theme.textTheme.titleSmall,
+                                ),
+                              )
+                            : Column(
+                                children:
+                                    createCharacterCubit.voicesModel!.data!
+                                        .map(
+                                          (e) => Frame(
+                                              data: e,
+                                              iconPlay: ImageConstant
+                                                  .imgIconPlay27x27, //ImageConstant.imgPauseCircleFilled,
+                                              checkRound: ImageConstant
+                                                  .imgCheckRoundPrimary),
+                                        )
+                                        .toList());
                   }),
             ]));
   }

@@ -1,4 +1,3 @@
-import 'package:supercoder_test/src/features/chat/data/models/chat_model.dart';
 import 'package:supercoder_test/src/utils/exports.dart';
 
 final class ChatRemoteSource {
@@ -17,9 +16,9 @@ final class ChatRemoteSource {
     Result result = await _dioClient.post(
       'api/chats',
       {
-        "characterId": _localSource.getStoredCharacterID,
+        "characterId": num.parse(_localSource.getStoredCharacterID!),
         "text": firstMessage,
-        "lastChatId": DateTime.now().millisecond
+        "lastChatId": 0
       },
       isLoading: false,
       token: _localSource.token,
@@ -50,7 +49,7 @@ final class ChatRemoteSource {
       'api/chats',
       _localSource.token,
       queryParameters: {
-        "characterId" : _localSource.getStoredCharacterID,
+        "characterId": _localSource.getStoredCharacterID,
         "limit": "9999"
       },
       isLoading: false,

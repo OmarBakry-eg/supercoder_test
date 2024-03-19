@@ -26,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fillColor,
     this.filled = true,
     this.validator,
+    this.onFieldSubmitted,
   });
 
   final Alignment? alignment;
@@ -72,6 +73,8 @@ class CustomTextFormField extends StatelessWidget {
 
   final FormFieldValidator<String>? validator;
 
+  final void Function(String)? onFieldSubmitted;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -85,6 +88,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget textFormFieldWidget(BuildContext context) => SizedBox(
         width: width ?? double.maxFinite,
         child: TextFormField(
+          onFieldSubmitted: onFieldSubmitted,
           scrollPadding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,

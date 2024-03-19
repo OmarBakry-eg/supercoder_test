@@ -58,24 +58,34 @@ class _ImageResultScreenState extends State<ImageResultScreen> {
                   BlocBuilder<CreateCharacterCubit, CreateCharacterState>(
                     bloc: createCharacterCubit,
                     builder: (context, state) {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: 208.v,
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 4.h,
-                          crossAxisSpacing: 4.h,
-                        ),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state is GeneratedImagesUploading
-                            ? 6
-                            : createCharacterCubit.generatedImages?.length,
-                        itemBuilder: (context, index) {
-                          return ImageWidget(
-                            image: createCharacterCubit.generatedImages?[index],
-                          );
-                        },
-                      );
+                      return state is CreateCharacterError
+                          ? Center(
+                              child: Text(
+                                state.message,
+                                style: theme.textTheme.titleSmall,
+                              ),
+                            )
+                          : GridView.builder(
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                mainAxisExtent: 208.v,
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 4.h,
+                                crossAxisSpacing: 4.h,
+                              ),
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: state is GeneratedImagesUploading
+                                  ? 6
+                                  : createCharacterCubit
+                                      .generatedImages?.length,
+                              itemBuilder: (context, index) {
+                                return ImageWidget(
+                                  image: createCharacterCubit
+                                      .generatedImages?[index],
+                                );
+                              },
+                            );
                     },
                   )
                 ],

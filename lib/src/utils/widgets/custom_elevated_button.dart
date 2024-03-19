@@ -16,6 +16,7 @@ class CustomElevatedButton extends BaseButton {
     super.isDisabled,
     super.height,
     super.width,
+    this.padding,
     required super.text,
   });
 
@@ -24,6 +25,8 @@ class CustomElevatedButton extends BaseButton {
   final Widget? leftIcon;
 
   final Widget? rightIcon;
+
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +39,10 @@ class CustomElevatedButton extends BaseButton {
   }
 
   Widget get buildElevatedButtonWidget => Container(
-        height: height ?? 44.v,
-        width: width ?? double.maxFinite,
+        height: height, //?? 44.v,
+        width: width, //?? double.maxFinite,
         margin: margin,
+        padding: padding,
         decoration: decoration,
         child: ElevatedButton(
           style: buttonStyle,
