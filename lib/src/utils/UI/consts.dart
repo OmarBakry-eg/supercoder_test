@@ -272,7 +272,7 @@ mixin Constants {
           ? content
           : Text(
               content,
-              style: const TextStyle(color: MyColors.white),
+              style: const TextStyle(color: Colors.white),
             ),
     ));
   }

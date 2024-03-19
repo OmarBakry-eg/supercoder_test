@@ -1,4 +1,4 @@
-import 'package:supercoder_test/src/utils/enum.dart';
+import 'package:supercoder_test/src/utils/exports.dart';
 
 class GenerateCharacterProfileImageModel {
   final String? prompt;
