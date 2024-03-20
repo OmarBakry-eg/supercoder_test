@@ -78,7 +78,7 @@ class CreateCharacterScreen extends StatelessWidget {
                       child: Text("Back",
                           style: CustomTextStyles.titleMediumPrimary)),
                   CustomElevatedButton(
-                    width: 179.h,
+                    width: 170.h,
                     onPressed: () {
                       createCharacterCubit.creatCharacterLogic();
                     },

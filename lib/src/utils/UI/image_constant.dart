@@ -19,10 +19,8 @@ class ImageConstant {
   static String imgIconFaceManShimmer =
       '$imagePath/img_icon_face_man_shimmer.svg';
 
-  // iPhone 13 & 14 - SeventyOne images
   static String imgRectangle256 = '$imagePath/img_rectangle_256.png';
 
-  // iPhone 13 & 14 - FiftyFour images
   static String imgVector15x12 = '$imagePath/img_vector_15x12.png';
 
   // Common images

@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final voicesModel = voicesModelFromJson(jsonString);
-
 // ignore_for_file: constant_identifier_names
-
 class VoicesModel {
   final List<VoiceData>? data;
   final Meta? meta;
