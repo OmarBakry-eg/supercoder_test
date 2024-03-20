@@ -11,19 +11,19 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   late CreateCharacterCubit createCharacterCubit;
   late ChatCubit chatCubit;
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
     createCharacterCubit = BlocProvider.of<CreateCharacterCubit>(context);
     chatCubit = BlocProvider.of<ChatCubit>(context);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
     chatCubit.getChatData();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,123 +49,132 @@ class _ChatScreenState extends State<ChatScreen> {
                           .backgroundImageUrl!)) as ImageProvider,
                   fit: BoxFit.cover)),
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppbarLeadingImage(
-                        imagePath: ImageConstant.imgArrowLeft,
-                        margin: EdgeInsets.only(
-                            left: 7.h, top: 16.v, bottom: 118.v),
-                        onTap: () {
-                          Constants.hideLoadingOrNavBack;
-                        }),
-                    const Spacer(),
-                    Center(
-                      child: AppbarTitle(
-                        text: "${createCharacterCubit.currentCharacter?.name}",
-                        margin: EdgeInsets.only(top: 18.v, bottom: 119.v),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppbarLeadingImage(
+                          imagePath: ImageConstant.imgArrowLeft,
+                          margin: EdgeInsets.only(
+                              left: 7.h, top: 16.v, bottom: 118.v),
+                          onTap: () {
+                            Constants.hideLoadingOrNavBack;
+                          }),
+                      const Spacer(),
+                      Center(
+                        child: AppbarTitle(
+                          text:
+                              "${createCharacterCubit.currentCharacter?.name}",
+                          margin: EdgeInsets.only(top: 18.v, bottom: 119.v),
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                BlocBuilder<ChatCubit, ChatState>(
-                  bloc: chatCubit,
-                  builder: (context, state) {
-                    if (state is ChatLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator.adaptive(),
-                      );
-                    }
-                    if (state is ChatError) {
-                      return Center(
-                        child: Text(state.message),
-                      );
-                    }
+                      const Spacer(),
+                    ],
+                  ),
+                  BlocBuilder<ChatCubit, ChatState>(
+                    bloc: chatCubit,
+                    builder: (context, state) {
+                      if (state is ChatLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        );
+                      }
+                      if (state is ChatError) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      }
 
-                    return chatCubit.messageList == null ||
-                            chatCubit.messageList!.isEmpty
-                        ? const Center(
-                            child: Text("No messages"),
-                          )
-                        : Expanded(
-                            child: ListView.separated(
-                                controller: chatCubit.scrollController,
-                                shrinkWrap: true,
-                                itemBuilder: (c, i) => chatCubit
-                                            .messageList?.first.id ==
-                                        chatCubit.messageList?[i].id
-                                    ? IntroMessageWidget(
-                                        introMessage:
-                                            chatCubit.messageList?[i].text ??
-                                                "")
-                                    : chatCubit.messageList?[i].speaker ==
-                                            "user"
-                                        ? MyMessageWidget(
-                                            message: chatCubit
-                                                    .messageList?[i].text ??
-                                                "")
-                                        : FirstMessageAndAIMessageWidget(
-                                            message:
-                                                chatCubit.messageList?[i].text),
-                                separatorBuilder: (c, i) => SizedBox(
-                                      height: 8.v,
-                                    ),
-                                itemCount: chatCubit.messageList?.length ?? 0),
-                          );
-                  },
-                )
-              ],
+                      return chatCubit.messageList == null ||
+                              chatCubit.messageList!.isEmpty
+                          ? const Center(
+                              child: Text("No messages"),
+                            )
+                          : Expanded(
+                              child: ListView.separated(
+                                  controller: chatCubit.scrollController,
+                                  shrinkWrap: true,
+                                  itemBuilder: (c, i) => chatCubit
+                                              .messageList?.first.id ==
+                                          chatCubit.messageList?[i].id
+                                      ? IntroMessageWidget(
+                                          introMessage:
+                                              chatCubit.messageList?[i].text ??
+                                                  "")
+                                      : chatCubit.messageList?[i].speaker ==
+                                              "user"
+                                          ? MyMessageWidget(
+                                              message: chatCubit
+                                                      .messageList?[i].text ??
+                                                  "")
+                                          : FirstMessageAndAIMessageWidget(
+                                              message: chatCubit
+                                                  .messageList?[i].text),
+                                  separatorBuilder: (c, i) => SizedBox(
+                                        height: 8.v,
+                                      ),
+                                  itemCount:
+                                      chatCubit.messageList?.length ?? 0),
+                            );
+                    },
+                  )
+                ],
+              ),
             ),
           )),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(boxShadow: [
-          BoxShadow(
-              color: Colors.black,
-              blurRadius: 40,
-              spreadRadius: 15,
-              offset: Offset(0, 10)),
-        ], color: Colors.black54),
-        width: double.maxFinite,
-        height: 150.v,
-        padding: EdgeInsets.symmetric(horizontal: 12.h),
-        margin: EdgeInsets.only(top: 15.v),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10.v,
-            ),
-            Text("${createCharacterCubit.currentCharacter?.name}",
-                style:
-                    theme.textTheme.titleLarge?.copyWith(color: Colors.white)),
-            SizedBox(
-              height: 10.v,
-            ),
-            CustomTextFormField(
-                onFieldSubmitted: (String? v) {
-                  chatCubit.sendMessage();
-                },
-                controller: chatCubit.messageController,
-                hintText: "Type a message",
-                textInputAction: TextInputAction.send,
-                suffix: IconButton(
-                    iconSize: 20,
-                    onPressed: () {
-                      chatCubit.sendMessage();
-                    },
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    )),
-                //maxLines: 2,
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.v))
-          ],
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.maybeViewInsetsOf(context)?.bottom ?? 0),
+        child: Container(
+          decoration: const BoxDecoration(boxShadow: [
+            BoxShadow(
+                color: Colors.black,
+                blurRadius: 40,
+                spreadRadius: 15,
+                offset: Offset(0, 10)),
+          ], color: Colors.black54),
+          width: double.maxFinite,
+          height: 150.v,
+          padding: EdgeInsets.symmetric(horizontal: 12.h),
+          margin: EdgeInsets.only(top: 15.v),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10.v,
+              ),
+              Text("${createCharacterCubit.currentCharacter?.name}",
+                  style: theme.textTheme.titleLarge
+                      ?.copyWith(color: Colors.white)),
+              SizedBox(
+                height: 10.v,
+              ),
+              CustomTextFormField(
+                  onFieldSubmitted: (String? v) {
+                    chatCubit.sendMessage();
+                  },
+                  controller: chatCubit.messageController,
+                  hintText: "Type a message",
+                  textInputAction: TextInputAction.send,
+                  suffix: IconButton(
+                      iconSize: 20,
+                      onPressed: () {
+                        chatCubit.sendMessage();
+                      },
+                      icon: const Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      )),
+                  //maxLines: 2,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.v))
+            ],
+          ),
         ),
       ),
     );
@@ -240,8 +249,7 @@ class IntroMessageWidget extends StatelessWidget {
 
 class FirstMessageAndAIMessageWidget extends StatelessWidget {
   final String? message;
-  const FirstMessageAndAIMessageWidget(
-      {super.key, required this.message});
+  const FirstMessageAndAIMessageWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {

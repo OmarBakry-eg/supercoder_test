@@ -11,7 +11,6 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  ///Please update theme as per your need if required.
   ThemeHelper().changeTheme('primary');
   ErrorWidget.builder = (FlutterErrorDetails errorDetails) => CustomErrorWidget(
         errorDetails: errorDetails,

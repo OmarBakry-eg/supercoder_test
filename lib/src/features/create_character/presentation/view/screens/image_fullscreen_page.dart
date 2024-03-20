@@ -40,7 +40,7 @@ class ImageFullScreenPage extends StatelessWidget {
                         ),
                       ),
                       CustomElevatedButton(
-                        width: 179.h,
+                        width: 170.h,
                         text: "Select",
                         onPressed: () {
                           Constants.navigateTo(const CreateCharacterScreen());

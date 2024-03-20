@@ -74,7 +74,7 @@ class _AddVoiceScreenState extends State<AddVoiceScreen> {
                         }
                         Constants.hideLoadingOrNavBack;
                       },
-                      width: 179.h,
+                      width: 170.h,
                       text: "Next",
                       margin: EdgeInsets.only(left: 79.h))
                 ])));
