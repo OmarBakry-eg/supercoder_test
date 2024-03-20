@@ -126,8 +126,7 @@ class SetupCharacterProfile extends StatelessWidget {
             child: CustomElevatedButton(
                 height: 52.v,
                 onPressed: () {
-                  Constants.navigateTo(const ChatScreen(),
-                      pushAndRemoveUntil: true);
+                  Constants.navigateTo(const ChatScreen());
                 },
                 text: "Confirm",
                 buttonStyle: CustomButtonStyles.outlineOnErrorTL26)));
